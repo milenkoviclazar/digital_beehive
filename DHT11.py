@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 """
 read the temperature and humidity from DHT11
 """
