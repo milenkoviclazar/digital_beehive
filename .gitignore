@@ -2,4 +2,10 @@ circuit.pdf
 venv/
 .idea/
 TODO
+*.log
+*.DS_Store
+plot/package-lock.json
+plot/node_modules/
+plot/dygraph.css
+plot/dygraph.js
 
