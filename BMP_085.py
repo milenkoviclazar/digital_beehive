@@ -1,32 +1,47 @@
 #!/usr/bin/python
+# Copyright (c) 2014 Adafruit Industries
+# Author: Tony DiCola
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
 
-from Adafruit_BMP085 import BMP085
+# Can enable debug output by uncommenting:
+#import logging
+#logging.basicConfig(level=logging.DEBUG)
 
-# ===========================================================================
-# Example Code
-# ===========================================================================
+import Adafruit_BMP.BMP085 as BMP085
 
-# Initialise the BMP085 and use STANDARD mode (default value)
-# bmp = BMP085(0x77, debug=True)
-bmp = BMP085(0x77)
+# Default constructor will pick a default I2C bus.
+#
+# For the Raspberry Pi this means you should hook up to the only exposed I2C bus
+# from the main GPIO header and the library will figure out the bus number based
+# on the Pi's revision.
+#
+# For the Beaglebone Black the library will assume bus 1 by default, which is
+# exposed with SCL = P9_19 and SDA = P9_20.
+sensor = BMP085.BMP085()
 
-# To specify a different operating mode, uncomment one of the following:
-# bmp = BMP085(0x77, 0)  # ULTRALOWPOWER Mode
-# bmp = BMP085(0x77, 1)  # STANDARD Mode
-# bmp = BMP085(0x77, 2)  # HIRES Mode
-# bmp = BMP085(0x77, 3)  # ULTRAHIRES Mode
+# Optionally you can override the bus number:
+#sensor = BMP085.BMP085(busnum=2)
 
-temp = bmp.readTemperature()
-
-# Read the current barometric pressure level
-pressure = bmp.readPressure()
-
-# To calculate altitude based on an estimated mean sea level pressure
-# (1013.25 hPa) call the function as follows, but this won't be very accurate
-altitude = bmp.readAltitude()
-
-# To specify a more accurate altitude, enter the correct mean sea level
-# pressure level.  For example, if the current pressure level is 1023.50 hPa
-# enter 102350 since we include two decimal places in the integer value
-# altitude = bmp.readAltitude(102350)
-print "%.2f, %.2f" % (temp, (pressure / 100.0))
+# You can also optionally change the BMP085 mode to one of BMP085_ULTRALOWPOWER,
+# BMP085_STANDARD, BMP085_HIGHRES, or BMP085_ULTRAHIGHRES.  See the BMP085
+# datasheet for more details on the meanings of each mode (accuracy and power
+# consumption are primarily the differences).  The default mode is STANDARD.
+#sensor = BMP085.BMP085(mode=BMP085.BMP085_ULTRAHIGHRES)
+print('{0:0.2f} {1:0.2f}'.format(sensor.read_temperature(), sensor.read_pressure()))
