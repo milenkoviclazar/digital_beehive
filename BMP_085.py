@@ -1,4 +1,5 @@
 #!/usr/bin/python
+
 # Copyright (c) 2014 Adafruit Industries
 # Author: Tony DiCola
 #
@@ -25,7 +26,7 @@
 #logging.basicConfig(level=logging.DEBUG)
 
 import Adafruit_BMP.BMP085 as BMP085
-
+import datetime
 # Default constructor will pick a default I2C bus.
 #
 # For the Raspberry Pi this means you should hook up to the only exposed I2C bus
@@ -44,4 +45,5 @@ sensor = BMP085.BMP085()
 # datasheet for more details on the meanings of each mode (accuracy and power
 # consumption are primarily the differences).  The default mode is STANDARD.
 #sensor = BMP085.BMP085(mode=BMP085.BMP085_ULTRAHIGHRES)
-print('{0:0.2f} {1:0.2f}'.format(sensor.read_temperature(), sensor.read_pressure()))
+now = datetime.datetime.now()
+print('{:0.2f} {:0.2f} {:d} {:d}'.format(sensor.read_temperature(), sensor.read_pressure(), now.hour, now.minute))
