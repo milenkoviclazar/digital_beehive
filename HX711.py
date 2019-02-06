@@ -49,7 +49,7 @@ while True:
         # Prints the weight. Comment if you're debbuging the MSB and LSB issue.
         #val = hx.get_weight(5)
 	val = hx.read_long()
-        val = (val + 8252704) / 41.61
+        val = (val + 8252755) / 41.61
         print val
 
         # To get weight from both channels (if you have load cells hooked up
