@@ -46,4 +46,13 @@ sensor = BMP085.BMP085()
 # consumption are primarily the differences).  The default mode is STANDARD.
 #sensor = BMP085.BMP085(mode=BMP085.BMP085_ULTRAHIGHRES)
 now = datetime.datetime.now()
-print('{:0.2f} {:0.2f} {:d} {:d}'.format(sensor.read_temperature(), sensor.read_pressure(), now.hour, now.minute))
+
+n_measurements = 3
+average_temperature = 0
+average_pressure = 0
+for i in range(n_measurements):
+    average_temperature += sensor.read_temperature()
+    average_pressure += sensor.read_pressure()
+average_temperature /= n_measurements
+average_pressure /= n_measurements
+print('{:0.2f} {:0.2f} {:d} {:d} {:d} {:d} {:d}'.format(average_pressure, average_temperature, now.year, now.month, now.day, now.hour, now.minute))
